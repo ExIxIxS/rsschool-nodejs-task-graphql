@@ -1,7 +1,7 @@
 import { GraphQLBoolean, GraphQLInputObjectType, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from "graphql";
 import { UUIDType } from "./uuid.types.js";
 import { memberType, memberTypeIdEnum } from "./member.types.js";
-import { Context, NoArgs } from "../interfaces/app.interfaces.js";
+import { PrismaAppData, MissedArgs } from "../interfaces/app.interfaces.js";
 import { userType } from "./user.types.js";
 import { Profile } from "../interfaces/profile.interfaces.js";
 
@@ -13,11 +13,11 @@ const profileType = new GraphQLObjectType({
     yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
     memberType: {
       type: new GraphQLNonNull(memberType),
-      resolve: async (source: Profile, _: NoArgs, { memberTypeLoader }: Context) => memberTypeLoader.load(source.memberTypeId),
+      resolve: async (source: Profile, _: MissedArgs, { memberTypeLoader }: PrismaAppData) => memberTypeLoader.load(source.memberTypeId),
     },
     user: {
       type: userType as GraphQLObjectType,
-      resolve: async (source: Profile, _: NoArgs, { userLoader }: Context) => userLoader.load(source.userId),
+      resolve: async (source: Profile, _: MissedArgs, { userLoader }: PrismaAppData) => userLoader.load(source.userId),
     },
   }),
 });

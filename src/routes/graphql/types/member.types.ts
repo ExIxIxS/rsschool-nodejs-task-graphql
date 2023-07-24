@@ -2,7 +2,7 @@ import { GraphQLEnumType, GraphQLFloat, GraphQLInt, GraphQLList, GraphQLNonNull,
 import { MemberTypeId } from '../../member-types/schemas.js'
 
 import { profileType } from "./profile.types.js";
-import { Context, NoArgs } from "../interfaces/app.interfaces.js";
+import { PrismaAppData, MissedArgs } from "../interfaces/app.interfaces.js";
 import { MemberType } from "../interfaces/member.interfaces.js";
 
 const memberTypeIdEnum = new GraphQLEnumType({
@@ -25,7 +25,7 @@ const memberType = new GraphQLObjectType({
     postsLimitPerMonth: { type: new GraphQLNonNull(GraphQLInt) },
     profiles: {
       type: new GraphQLList(profileType),
-      resolve: async (source: MemberType, _: NoArgs, { profilesByMemberTypeIdLoader }: Context) => profilesByMemberTypeIdLoader.load(source.id),
+      resolve: async (source: MemberType, _: MissedArgs, { profilesByMemberTypeIdLoader }: PrismaAppData) => profilesByMemberTypeIdLoader.load(source.id),
     },
   }),
 });

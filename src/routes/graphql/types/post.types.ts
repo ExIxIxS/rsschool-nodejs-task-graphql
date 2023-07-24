@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { GraphQLInputObjectType, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { UUIDType } from "./uuid.types.js";
-import { Context, NoArgs } from "../interfaces/app.interfaces.js";
+import { PrismaAppData, MissedArgs } from "../interfaces/app.interfaces.js";
 import { userType } from "./user.types.js";
 import { Post } from "../interfaces/post.interfaces.js";
 
@@ -12,7 +13,7 @@ const postType = new GraphQLObjectType({
     content: { type: new GraphQLNonNull(GraphQLString) },
     author: {
       type: userType,
-      resolve: async (source: Post, _: NoArgs, { userLoader }: Context) => userLoader.load(source.authorId),
+      resolve: async (source: Post, _: MissedArgs, { userLoader }: PrismaAppData) => userLoader.load(source.authorId),
     },
   }),
 });

@@ -15,10 +15,10 @@ interface SubscriptionMutationInput {
   authorId: string;
 };
 
-type NoArgs = Record<string | number | symbol, never>;
+type MissedArgs = Record<string | number | symbol, never>;
 
-interface Context extends DataLoaders {
+interface PrismaAppData extends DataLoaders {
   prisma: PrismaClient;
 }
 
-export { ID, Subscription, SubscriptionMutationInput, NoArgs, Context };
+export { ID, Subscription, SubscriptionMutationInput, MissedArgs, PrismaAppData };
