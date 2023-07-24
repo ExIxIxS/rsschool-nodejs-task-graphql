@@ -6,7 +6,7 @@ const isUUID = (value: unknown): value is string =>
     value,
   );
 
-export const UUIDType = new GraphQLScalarType({
+const UUIDType = new GraphQLScalarType({
   name: 'UUID',
   serialize(value) {
     if (!isUUID(value)) {
@@ -29,3 +29,5 @@ export const UUIDType = new GraphQLScalarType({
     return undefined;
   },
 });
+
+export { UUIDType };
