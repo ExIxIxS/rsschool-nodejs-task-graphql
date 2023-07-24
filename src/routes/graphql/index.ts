@@ -3,6 +3,7 @@ import { graphql } from 'graphql';
 
 import { createGqlResponseSchema, gqlRequestSchema, gqlResponseSchema } from './schemas.js';
 import { getDataLoaders } from './getDataLoaders.js';
+import { getAllRestHandlers } from './restHandlers/restHandlers.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.route({
@@ -20,7 +21,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       const response = await graphql({
         schema: gqlRequestSchema,
         source: req.body.query,
-        rootValue: {},
+        rootValue: getAllRestHandlers(),
         variableValues: req.body.variables,
         contextValue: { prisma: prisma, ...getDataLoaders(prisma) }
       });
